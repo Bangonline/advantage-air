@@ -1,0 +1,102 @@
+@import 'variables';
+
+.rounded-cta {
+    padding: 17px 34px;
+    border: 1px solid $text_black;
+    border-radius: 30px;
+    width: max-content;
+    display: block;
+    font-size: 15px;
+    line-height: 21.44px;
+    text-decoration: none;
+    color: $text_black;
+}
+
+
+a {
+    text-decoration: none;
+    &.link-style-primary {
+        background-color: $primary_blue;
+        color: $white;
+        padding: 17px 34px;
+        border-radius: 960px;
+        font-family: $heading_font;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 21.44px;
+        transition: 0.5s;
+        &:hover {
+            background-color: $secondary_blue;
+        }
+        @include mobile {
+            display: block;
+            text-align: center;
+        }
+    }
+    &.link-style-secondary {
+        background-color: $text_black;
+        color: $white;
+        padding: 17px 34px;
+        border-radius: 960px;
+        font-family: $heading_font;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 21.44px;
+        transition: 0.5s;
+        &:hover {
+            background-color: $black;
+        }
+        @include mobile {
+            display: block;
+            text-align: center;
+        }
+    }
+    &.link-style-tertiary {
+        background-color: $white;
+        color: $text_black;
+        border: 1px solid $text_black;
+        padding: 17px 34px;
+        border-radius: 960px;
+        font-family: $heading_font;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 21.44px;
+        transition: 0.5s;
+        &:hover {
+            background-color: $primary_blue;
+            border-color: $primary_blue;
+            color: $white;
+        }
+        @include mobile {
+            display: block;
+            text-align: center;
+        }
+    }
+    &.link-style-alternate {
+        background-color: $white;
+        color: $text_black;
+        border: 1px solid $white;
+        padding: 17px 34px;
+        border-radius: 960px;
+        font-family: $heading_font;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 21.44px;
+        transition: 0.5s;
+        &:hover {
+            background-color: $text_black;
+            color: $white;
+            border: 1px solid $text_black;
+        }
+        @include mobile {
+            display: block;
+            text-align: center;
+        }
+    }
+    &.link-style-text {
+        font-family: $body_font;
+        font-size: 17px;
+        font-weight: 500;
+        line-height: 21.44px;
+    }
+}

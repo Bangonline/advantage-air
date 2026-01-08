@@ -1,0 +1,56 @@
+//Colours
+$light_grey: #F8F9FA;
+$mid_grey: #EFEFEF;
+$text_black: #323336;
+$text_grey: #505050;
+$primary_blue: #005DAB;
+$secondary_blue: #1380DC;
+$light_blue: #f0f7fd;
+$border_grey: rgb(98, 98, 98, 0.4);
+$black: #000000;
+$white: #FFFFFF;
+$bg_overlay: rgba(0, 0, 0, 0.6);
+
+//Fonts
+$body_font: "Inter", sans-serif;
+$heading_font: "Gabarito", sans-serif;
+
+//Responsive Widths
+$mobile_width: 100%;
+$tablet_width: 800px;
+$container_width: 1400px;
+
+// Define a mixin for the mobile media query
+@mixin mobile {
+    @media only screen and (min-width: 248px) and (max-width: 767px) {
+      @content;
+    }
+  }
+  
+  // Define a mixin for the tablet media query
+  @mixin tablet {
+    @media only screen and (min-width: 768px) and (max-width: 1024px) {
+      @content;
+    }
+  }
+
+  // Define a mixin for the laptop media query
+  @mixin laptop {
+    @media only screen and (min-width: 1025px) and (max-width: 1470px) {
+      @content;
+    }
+  }
+  
+  // Define a mixin for the desktop media query
+  @mixin desktop {
+    @media only screen and (min-width: 1471px) and (max-width: 1920px) {
+      @content;
+    }
+  }
+  
+  // Define a mixin for ultra wide media query
+  @mixin ultrawide {
+    @media only screen and (min-width: 2160px) and (max-width: 3440px) {
+      @content;
+    }
+  }
