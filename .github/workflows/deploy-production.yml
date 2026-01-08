@@ -1,0 +1,26 @@
+name: Deploy to WP Engine Production
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to WP Engine
+        uses: wpengine/github-action-wpe-site-deploy@v3
+        with:
+          WPE_SSHG_KEY_PRIVATE: ${{ secrets.WPE_SSHG_KEY_PRIVATE }}
+          WPE_ENV: advantageair1
+          SRC_PATH: ./
+          REMOTE_PATH: wp-content/themes/bang-digital/
+          FLAGS: -azvr --inplace --delete --exclude=".*" --exclude="node_modules/" --exclude="src/" --exclude="package*.json" --exclude="webpack.mix.js" --exclude=".storybook/" --exclude="stories/" --exclude="storybook-static/"
+          PHP_LINT: FALSE
+          CACHE_CLEAR: FALSE
