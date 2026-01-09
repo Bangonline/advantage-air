@@ -223,11 +223,21 @@ function enqueue_google_maps_script()
 	// Enqueue your custom JS first
 	wp_enqueue_script('registered-functions-script', get_template_directory_uri() . '/js/functions.js', array('jquery'), '2.0', true);
 
+	// Get Google Maps API key from ACF options
+	$google_maps_key = get_field('google_maps_api_key', 'option');
+
+	// Localize script to pass API key to JavaScript
+	wp_localize_script('registered-functions-script', 'advantageAirConfig', array(
+		'googleMapsApiKey' => $google_maps_key ? $google_maps_key : ''
+	));
+
 	// Add initMap to window object before loading Google Maps
 	wp_add_inline_script('registered-functions-script', 'window.initMap = function() {};', 'before');
 
 	// Now enqueue Google Maps API
-	wp_enqueue_script('google-maps-api', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCoTj_7E99lNby-si3WsQWQmIFrHyq5i_g&callback=initMap', array('registered-functions-script'), null, true);
+	if ($google_maps_key) {
+		wp_enqueue_script('google-maps-api', 'https://maps.googleapis.com/maps/api/js?key=' . esc_attr($google_maps_key) . '&callback=initMap', array('registered-functions-script'), null, true);
+	}
 }
 add_action('wp_enqueue_scripts', 'enqueue_google_maps_script');
 
@@ -280,9 +290,15 @@ function get_dealer_by_postcode($postcode, $product, $region, $use_postcode)
 
 	if ($postcode) {
 
+		// Get Google Maps API key from ACF options (same key used for Geocoding API)
+		$google_maps_key = get_field('google_maps_api_key', 'option');
+
+		if (!$google_maps_key) {
+			return; // Exit if no API key configured
+		}
 
 		//Get lat/long data for postcode
-		$google_map_url = 'https://maps.google.com/maps/api/geocode/json?key=AIzaSyDdVgY-U0M__WJsBmp99TH0yH79-Saqklc&components=postal_code:' . $postcode . '|country:AU&region=AU';
+		$google_map_url = 'https://maps.google.com/maps/api/geocode/json?key=' . esc_attr($google_maps_key) . '&components=postal_code:' . $postcode . '|country:AU&region=AU';
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $google_map_url);
 		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
@@ -454,6 +470,8 @@ function noResults($product, $region, $use_postcode)
 
 function stateMatchCheck($query, $check)
 {
+	$trigger = false; // Initialize variable to prevent undefined variable warning
+
 	if ($query && $check) {
 		foreach ($query as $key => $address_result) {
 			if ($address_result->short_name == $check) {
@@ -746,7 +764,8 @@ function get_apk_download_url($apk_url) {
 //ACF Google Maps API
 
 add_filter('acf/settings/google_api_key', function () {
-	return 'AIzaSyCoTj_7E99lNby-si3WsQWQmIFrHyq5i_g';
+	$google_maps_key = get_field('google_maps_api_key', 'option');
+	return $google_maps_key ? $google_maps_key : '';
 });
 
 //Send dealer contact form to dealers

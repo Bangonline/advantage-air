@@ -445,8 +445,18 @@ function loadGoogleMapsAPI(callback) {
     if (typeof google === 'object' && typeof google.maps === 'object') {
         callback(); // If already loaded, just initialize the map
     } else {
+        // Get API key from localized script variable
+        var apiKey = (typeof advantageAirConfig !== 'undefined' && advantageAirConfig.googleMapsApiKey)
+            ? advantageAirConfig.googleMapsApiKey
+            : '';
+
+        if (!apiKey) {
+            console.error('Google Maps API key not configured');
+            return;
+        }
+
         var script = document.createElement('script');
-        script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCoTj_7E99lNby-si3WsQWQmIFrHyq5i_g';
+        script.src = 'https://maps.googleapis.com/maps/api/js?key=' + apiKey;
         script.async = true;
         script.defer = true;
 
